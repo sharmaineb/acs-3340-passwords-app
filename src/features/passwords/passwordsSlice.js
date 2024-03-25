@@ -1,21 +1,25 @@
-import { createSlice } from '@reduxjs/toolkit' 
+import { createSlice } from '@reduxjs/toolkit';
+
+let nextId = 2;
 
 const initialState = {
-    value: [
-      { password: 'hello', name: 'test'}
-    ],
-  }
+  value: [
+    { id: 1, password: 'hello', name: 'test' }
+  ],
+};
 
 const passwordsSlice = createSlice({
-	name: 'passwords',
-	initialState,
-	reducers: { 
-    // Action and reducer
-		addPassword: (state, action) => {
-			state.value.push(action.payload)
-		}
-	}
-})
+  name: 'passwords',
+  initialState,
+  reducers: {
+    addPassword: (state, action) => {
+      state.value.push({ id: nextId++, ...action.payload });
+    },
+    deletePassword: (state, action) => {
+      state.value = state.value.filter(password => password.id !== action.payload);
+    },
+  },
+});
 
-export const { addPassword } = passwordsSlice.actions
-export default passwordsSlice.reducer
+export const { addPassword, deletePassword } = passwordsSlice.actions;
+export default passwordsSlice.reducer;

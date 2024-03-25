@@ -38,22 +38,24 @@ function Password() {
   };
 
   return (
-    <div>
-      <input 
-        type="text"
-        value={password}
-        readOnly
-      />
-      <br />
-      <input 
-        type="text"
-        placeholder="Enter Name or Description"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-      />
-      <br />
-      <label>
-        Password Length: 
+    <div className="container">
+      <div className="input-container">
+        <input 
+          type="text"
+          value={password}
+          readOnly
+        />
+      </div>
+      <div className="input-container">
+        <input 
+          type="text"
+          placeholder="Enter Name or Description"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+      </div>
+      <div className="input-container">
+        <label>Password Length:</label>
         <input 
           type="range"
           min="4"
@@ -61,31 +63,32 @@ function Password() {
           value={passwordLength}
           onChange={(e) => setPasswordLength(parseInt(e.target.value))}
         />
-        {passwordLength}
-      </label>
-      <br />
-      <label>
-        Include Hyphens:
-        <input 
-          type="checkbox"
-          checked={includeHyphens}
-          onChange={(e) => setIncludeHyphens(e.target.checked)}
-        />
-      </label>
-      <br />
-      <select value={generatorType} onChange={(e) => setGeneratorType(e.target.value)}>
-        <option value="letters">Letters</option>
-        <option value="lettersNumbers">Letters + Numbers</option>
-        <option value="lettersNumbersPunctuation">Letters + Numbers + Punctuation</option>
-      </select>
-      <br />
-      <button onClick={generatePassword}>Generate</button>
-      <br />
-      <button
-        onClick={() => dispatch(addPassword({ name, password }))}
-        className='button' 
-      >Save</button>
-
+        <span>{passwordLength}</span>
+      </div>
+      <div className="input-container">
+        <label>
+          Include Hyphens:
+          <input 
+            type="checkbox"
+            checked={includeHyphens}
+            onChange={(e) => setIncludeHyphens(e.target.checked)}
+          />
+        </label>
+      </div>
+      <div className="input-container">
+        <select value={generatorType} onChange={(e) => setGeneratorType(e.target.value)}>
+          <option value="letters">Letters</option>
+          <option value="lettersNumbers">Letters + Numbers</option>
+          <option value="lettersNumbersPunctuation">Letters + Numbers + Punctuation</option>
+        </select>
+      </div>
+      <div className="buttons-container">
+        <button onClick={generatePassword}>Generate</button>
+        <button
+          onClick={() => dispatch(addPassword({ name, password }))}
+          className='button' 
+        >Save</button>
+      </div>
       <PasswordStrength password={password} />
     </div>
   );
