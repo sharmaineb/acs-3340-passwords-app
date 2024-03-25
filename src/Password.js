@@ -1,73 +1,79 @@
-import { useState } from 'react';
-
-function random(n) {
-  return Math.floor(Math.random() * n);
-}
-
-function generateRandomCharacter() {
-  const characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+-=[]{}|;:,.<>?';
-  return characters[random(characters.length)];
-}
-
-function generateRandomPassword(length) {
-  let password = '';
-  for (let i = 0; i < length; i++) {
-    password += generateRandomCharacter();
-  }
-  return password;
-}
-
-function generatePatternedPassword() {
-  let password = '';
-  for (let i = 0; i < 3; i++) {
-    for (let j = 0; j < 3; j++) {
-      password += generateRandomCharacter();
-    }
-    if (i !== 2) {
-      password += '-';
-    }
-  }
-  return password;
-}
-
-function generateWordPassword() {
-  const words = [
-    'apple', 'banana', 'orange', 'grape', 'peach', 'pear', 'cherry', 'strawberry',
-    'cat', 'dog', 'squirrel', 'fish', 'rabbit', 'capybara', 'turtle', 'horse',
-    'happy', 'sad', 'angry', 'excited', 'calm', 'sleepy', 'hungry', 'thirsty'
-  ];
-
-  const passwordLength = random(5) + 4;
-  let password = '';
-  for (let i = 0; i < passwordLength; i++) {
-    password += words[random(words.length)] + ' ';
-  }
-  return password.trim();
-}
+import React, { useState } from 'react';
 
 function Password() {
   const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
+  const [passwordLength, setPasswordLength] = useState(8);
+  const [includeHyphens, setIncludeHyphens] = useState(false);
+  const [generatorType, setGeneratorType] = useState('letters');
 
-  const handleGenerate = (type) => {
-    let newPassword = '';
-    if (type === 'random') {
-      newPassword = generateRandomPassword(8);
-    } else if (type === 'pattern') {
-      newPassword = generatePatternedPassword();
-    } else if (type === 'word') {
-      newPassword = generateWordPassword();
+  const generatePassword = () => {
+    let characters = '';
+    let generatedPassword = '';
+
+    if (generatorType === 'letters') {
+      characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    } else if (generatorType === 'lettersNumbers') {
+      characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    } else if (generatorType === 'lettersNumbersPunctuation') {
+      characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+-=[]{}|;:,.<>?';
     }
-    setPassword(newPassword);
+
+    for (let i = 0; i < passwordLength; i++) {
+      generatedPassword += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+
+    if (includeHyphens) {
+      const regex = new RegExp(`.{3}`, 'g');
+      generatedPassword = generatedPassword.match(regex).join('-');
+    }
+
+    setPassword(generatedPassword);
   };
 
   return (
     <div>
-      <div>{password}</div>
-      <div>
-        <button onClick={() => handleGenerate('random')}>Generate Random Password</button>
-        <button onClick={() => handleGenerate('pattern')}>Generate Patterned Password</button>
-        <button onClick={() => handleGenerate('word')}>Generate Word Password</button>
-      </div>
+      <input 
+        type="text"
+        value={password}
+        readOnly
+      />
+      <br />
+      <input 
+        type="text"
+        placeholder="Enter Name or Description"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+      />
+      <br />
+      <label>
+        Password Length: 
+        <input 
+          type="range"
+          min="4"
+          max="20"
+          value={passwordLength}
+          onChange={(e) => setPasswordLength(parseInt(e.target.value))}
+        />
+        {passwordLength}
+      </label>
+      <br />
+      <label>
+        Include Hyphens:
+        <input 
+          type="checkbox"
+          checked={includeHyphens}
+          onChange={(e) => setIncludeHyphens(e.target.checked)}
+        />
+      </label>
+      <br />
+      <select value={generatorType} onChange={(e) => setGeneratorType(e.target.value)}>
+        <option value="letters">Letters</option>
+        <option value="lettersNumbers">Letters + Numbers</option>
+        <option value="lettersNumbersPunctuation">Letters + Numbers + Punctuation</option>
+      </select>
+      <br />
+      <button onClick={generatePassword}>Generate</button>
     </div>
   );
 }
