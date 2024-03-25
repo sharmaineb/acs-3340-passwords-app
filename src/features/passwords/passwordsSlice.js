@@ -1,8 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit' 
 
 const initialState = {
-  value: [{ password: 'hello', name: 'test'}],
-}
+    value: [
+      { password: 'hello', name: 'test'}
+    ],
+  }
 
 const passwordsSlice = createSlice({
 	name: 'passwords',

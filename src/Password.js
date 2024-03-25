@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { addPassword } from './features/passwords/passwordsSlice';
 
 function Password() {
   const [password, setPassword] = useState('');
@@ -6,6 +8,8 @@ function Password() {
   const [passwordLength, setPasswordLength] = useState(8);
   const [includeHyphens, setIncludeHyphens] = useState(false);
   const [generatorType, setGeneratorType] = useState('letters');
+  
+  const dispatch = useDispatch();
 
   const generatePassword = () => {
     let characters = '';
@@ -74,6 +78,10 @@ function Password() {
       </select>
       <br />
       <button onClick={generatePassword}>Generate</button>
+      <br />
+      <button
+        onClick={() => dispatch(addPassword({ name, password }))}
+      >Save</button>
     </div>
   );
 }
