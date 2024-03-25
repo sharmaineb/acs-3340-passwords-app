@@ -1,4 +1,5 @@
 import { useSelector } from 'react-redux'
+import './PasswordsList.css';
 
 function PasswordsList() {
   const passwords = useSelector(state => state.passwords.value)
