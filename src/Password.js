@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { addPassword } from './features/passwords/passwordsSlice';
+import PasswordStrength from './PasswordStrength';
 
 function Password() {
   const [password, setPassword] = useState('');
@@ -82,6 +83,8 @@ function Password() {
       <button
         onClick={() => dispatch(addPassword({ name, password }))}
       >Save</button>
+
+      <PasswordStrength password={password} />
     </div>
   );
 }
