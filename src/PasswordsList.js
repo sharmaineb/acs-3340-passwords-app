@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { deletePassword } from './features/passwords/passwordsSlice';
+import { deletePassword } from './features/passwords/passwordsSlice.js';
 import './PasswordsList.css'; 
 
 function PasswordsList() {

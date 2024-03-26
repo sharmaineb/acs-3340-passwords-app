@@ -1,6 +1,6 @@
 import './App.css';
-import Password from './Password';
-import PasswordsList from './PasswordsList';
+import Password from './Password.js';
+import PasswordsList from './PasswordsList.js';
 
 function App() {
   return (

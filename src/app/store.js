@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit'
-import passwordsReducer from '../features/passwords/passwordsSlice'
-import { saveState, loadState } from './persistState';
+import passwordsReducer from '../features/passwords/passwordsSlice.js'
+import { saveState, loadState } from './persistState.js';
 
 export const store = configureStore({
     reducer: {

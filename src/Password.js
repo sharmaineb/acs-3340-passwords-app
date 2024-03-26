@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { addPassword } from './features/passwords/passwordsSlice';
-import PasswordStrength from './PasswordStrength';
+import { addPassword } from './features/passwords/passwordsSlice.js';
+import PasswordStrength from './PasswordStrength.js';
 import './Password.css';
 
 function Password() {
